@@ -108,3 +108,5 @@
     for comment in comments_to_best_post:
         print(f"Дата: {comment.created_at}, Пользователь: {comment.user.username}, Рейтинг: {comment.rating}, Текст: {comment.text}")
     ```
+
+P.S. Не забудьте применить миграции)
