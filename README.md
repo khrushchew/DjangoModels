@@ -1,5 +1,7 @@
 # DjangoModels
 
+Код предоставляет пример создания, редактирования и удаления объектов в приложении Django NewsPortal с использованием моделей и методов.
+
 1. Откройте консоль Django:
 
     ```bash
@@ -106,5 +108,3 @@
     for comment in comments_to_best_post:
         print(f"Дата: {comment.created_at}, Пользователь: {comment.user.username}, Рейтинг: {comment.rating}, Текст: {comment.text}")
     ```
-
-Этот код предоставляет пример создания, редактирования и удаления объектов в вашем приложении Django NewsPortal с использованием моделей и методов.
