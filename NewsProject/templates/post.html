@@ -1,0 +1,14 @@
+<!--  наследуемся от шаблона default.html, который мы создавали для flatpages -->
+{% extends 'flatpages/default.html' %}
+{% load banword_filter %}
+<!-- Название у нас будет Product -->
+{% block title %}
+Новости
+{% endblock title %}
+
+<!-- В контенте на странице мы выводим сам товар, идентификатор которого был передан в url -->
+{% block content %}
+<h1>{{ post.title|word_filter }}</h1>
+<h2>{{post.post_type }}, Рейтинг {{ post.rating }}, Создана: {{post.created_at}}</h2>
+<p>{{post.text|word_filter}}</p>
+{% endblock content %}
