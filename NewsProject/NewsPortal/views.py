@@ -41,11 +41,19 @@ class NewsDetail(DetailView):
 
     context_object_name = 'post'
 
-class View(ListView):
+class News_view(ListView):
     model = Post
     ordering = '-created_at'
 
     template_name = 'news.html'
+
+    context_object_name = 'posts'
+
+class Articles_view(ListView):
+    model = Post
+    ordering = '-created_at'
+
+    template_name = 'articles.html'
 
     context_object_name = 'posts'
 

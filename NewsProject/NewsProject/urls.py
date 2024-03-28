@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from NewsPortal.views import ArticlesCreate, ArticlesUpdate, ArticlesDelete
+from NewsPortal.views import ArticlesCreate, ArticlesUpdate, ArticlesDelete, Articles_view
 
 urlpatterns = [
    path('admin/', admin.site.urls),
@@ -24,6 +24,7 @@ urlpatterns = [
    # # Делаем так, чтобы все адреса из нашего приложения (simpleapp/urls.py)
    # # подключались к главному приложению с префиксом.
    path('news/', include('NewsPortal.urls')),
+   path('articles/', Articles_view.as_view()),
    path('articles/create', ArticlesCreate.as_view(), name='article_create'),
    path('articles/<int:pk>/edit', ArticlesUpdate.as_view(), name='article_update'),
    path('articles/<int:pk>/delete', ArticlesDelete.as_view(), name='article_delete')

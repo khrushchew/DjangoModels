@@ -8,11 +8,13 @@
     <ul>
         {% if posts %}
         {% for post in posts %}
+            {% if post.post_type == "Новость" %}
             <li>
                 <h2>{{ post.title|word_filter }} (ID: {{ post.pk }})</h2>
                 <p>{{ post.text|word_filter|slice:":20" }}...</p>
                 <p>{{ post.post_type }}, {{ post.author }}, {{ post.created_at|date:'d M Y' }}</p>
             </li>
+            {% endif %}
         {% endfor %}
         {% else %}
         <h2>Новости отсутствуют!</h2>
