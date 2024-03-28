@@ -1,0 +1,51 @@
+<!-- news.html -->
+{% extends 'flatpages/default.html' %}
+{% load banword_filter %}
+
+{% block title %}Новости{% endblock %}
+{% block content %}
+    <h1>Все новости</h1>
+
+{# Добавляем форму, которая объединяет набор полей, которые будут отправляться в запросе #}
+   <form action="" method="get">
+       {# Переменная, которую мы передали через контекст, может сгенерировать нам форму с полями #}
+       {{ filterset.form.as_p }}
+       {# Добавим кнопку отправки данных формы #}
+       <input type="submit" value="Найти" />
+   </form>
+
+
+    <ul>
+        {% if posts %}
+        {% for post in posts %}
+            <li>
+                <h2>{{ post.title|word_filter }} (ID: {{ post.pk }})</h2>
+                <p>{{ post.text|word_filter|slice:":20" }}...</p>
+                <p>{{ post.post_type }}, {{ post.author }}, {{ post.created_at|date:'d M Y' }}</p>
+            </li>
+        {% endfor %}
+        {% else %}
+        <h2>Новости отсутствуют!</h2>
+        {% endif %}
+    </ul>
+
+   {% if page_obj.has_previous %}
+       {# Для каждой ссылки пагинации указываем обработку через новый тег #}
+       <a href="?{% url_replace page=1 %}">1</a>
+       {% if page_obj.previous_page_number != 1 %}
+           ...
+           <a href="?{% url_replace page=page_obj.previous_page_number %}">{{ page_obj.previous_page_number }}</a>
+       {% endif %}
+   {% endif %}
+
+   {{ page_obj.number }}
+
+   {% if page_obj.has_next %}
+       <a href="?{% url_replace page=page_obj.next_page_number %}">{{ page_obj.next_page_number }}</a>
+       {% if paginator.num_pages != page_obj.next_page_number %}
+           ...
+           <a href="?{% url_replace page=page_obj.paginator.num_pages %}">{{ page_obj.paginator.num_pages }}</a>
+       {% endif %}
+   {% endif %}
+
+{% endblock %}
