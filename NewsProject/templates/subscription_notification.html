@@ -1,0 +1,12 @@
+<!--  наследуемся от шаблона default.html, который мы создавали для flatpages -->
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Post
+{% endblock title %}
+
+{% block content %}
+<h2>Вы подписались на категорию "{{ category.news_category }}"</h2>
+
+<button> <a href="/main/news/"> Вернуться на страницу с новостями </a> </button>
+{% endblock %}

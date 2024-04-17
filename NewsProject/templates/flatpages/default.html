@@ -1,0 +1,54 @@
+<!-- default.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Default Title{% endblock %}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        .header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .footer {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Новостной портал</h1>
+        <!-- Дополнительные элементы шапки сайта -->
+    </div>
+
+    <div class="content">
+        {% block content %}
+        <!-- Здесь будет содержимое каждой конкретной страницы -->
+        {% endblock %}
+    </div>
+
+<!--    <div class="footer">-->
+<!--        <p>Copyright © 2024 News Portal. All rights reserved.</p>-->
+<!--        &lt;!&ndash; Дополнительные элементы футера сайта &ndash;&gt;-->
+<!--    </div>-->
+</body>
+</html>

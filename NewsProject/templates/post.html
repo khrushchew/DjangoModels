@@ -1,0 +1,32 @@
+<!--  наследуемся от шаблона default.html, который мы создавали для flatpages -->
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
+{% load custom_tags %}
+
+{% block title %}
+Post
+{% endblock title %}
+
+{% block content %}
+<h1>{{ post.title|punctuation_marks|censor }}</h1>
+<h3> Дата создания — {{ post.date_time_creation_post|date:'j F, Y' }}</h3>
+<h3>Автор: {{ post.author }}</h3>
+{% for category in post.categories.all %}
+<h3>Категория: {{ category.news_category }}</h3>
+
+<p>{{ post.text|censor }}</p>
+<br/>
+
+{% if not is_subscriber %}
+<button> <a href="{% url 'subscribe' category.id %}"> Подписаться на категорию: {{ category.news_category }}</a> </button>
+{% endif %}
+{% if is_subscriber %}
+<button> <a href="{% url 'unsubscribe' category.id %}"> Вы уже подписаны на категорию: {{ category.news_category }}. Отписаться от категории?</a> </button>
+{% endif %}
+
+{% endfor %}
+
+
+{% endblock content %}
+

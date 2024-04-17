@@ -1,0 +1,17 @@
+<!--  наследуемся от шаблона default.html, который мы создавали для flatpages -->
+{% extends 'flatpages/default.html' %}
+
+{% block content %}
+<h1>Страница авторизованного пользователя {{request.user.username}}</h1>
+
+{% if is_not_authors %}
+<button> <a href="sign/upgrade/"> Хочу стать автором!</a> </button>
+{% endif %}
+
+<button> <a href="/main/news/"> Перейти на страницу с новостями </a> </button>
+<!--<button> <a href="sign/logout/">Выйти</a> </button>-->
+<form method="post" action="{% url 'logout' %}">
+    {% csrf_token %}
+    <button type="submit">выйти</button>
+</form>
+{% endblock %}
