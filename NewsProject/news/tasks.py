@@ -6,7 +6,7 @@ from django.conf import settings
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
 from celery import shared_task
-from NewsProject.news.models import Post, Category
+from .models import Post, Category
 
 
 @shared_task
