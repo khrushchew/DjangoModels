@@ -1,6 +1,4 @@
 import datetime
-# from time import timezone
-
 from django.utils import timezone
 from django.conf import settings
 from django.template.loader import render_to_string
@@ -68,3 +66,5 @@ def send_notifications_weekly():
 
    msg.attach_alternative(html_content, 'text/html')
    msg.send()
+
+

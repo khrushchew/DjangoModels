@@ -1,10 +1,10 @@
 from django.db import models
 from datetime import datetime
-
+from django.utils.timezone import now
 
 class Appointment(models.Model):
     date = models.DateField(
-        default=datetime.now(),
+        default=now,
     )
     client_name = models.CharField(
         max_length=200
