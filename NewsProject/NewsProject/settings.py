@@ -16,7 +16,6 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -28,7 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -39,17 +37,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_apscheduler',
-
+    
     'appointments.apps.AppointmentsConfig',
     'django.contrib.sites',
-
+    
     'news.apps.NewsConfig',
-
+    
     'django.contrib.flatpages',
     'django_filters',
     'sign',
     'protect',
-
+    
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -73,7 +71,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
+    
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'allauth.account.middleware.AccountMiddleware'
 
@@ -101,7 +99,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'NewsProject.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
@@ -111,7 +108,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -131,7 +127,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
@@ -142,7 +137,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
@@ -195,9 +189,112 @@ ADMINS = [
 SERVER_EMAIL = 'khrush4ew@yandex.ru'  # это будет у нас вместо аргумента FROM в массовой рассылке
 SITE_URL = 'http://127.0.0.1:8000'
 
-
 CELERY_BROKER_URL = 'redis://localhost:6379'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+
+import logging
+
+DEBUG = True
+
+logger = logging.getLogger('django')
+DATE_FORMAT = "%d-%m-%Y %H:%M:%S"
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'style': '{',
+    'formatters': {
+        'debug': {
+            'format': '%(asctime)s %(levelname)s %(message)s',
+            'datefmt': DATE_FORMAT,
+        },
+        'info': {
+            'format': '%(asctime)s %(levelname)s %(module)s %(message)s',
+            'datefmt': DATE_FORMAT,
+        },
+        'warning': {
+            'format': '%(asctime)s %(levelname)s %(pathname)s %(message)s',
+            'datefmt': DATE_FORMAT,
+        },
+        'error': {
+            'format': '%(asctime)s %(levelname)s %(message)s %(pathname)s %(exc_info)s',
+            'datefmt': DATE_FORMAT,
+        },
+        'security': {
+            'format': '%(asctime)s %(levelname)s %(module)s %(message)s',
+            'datefmt': DATE_FORMAT,
+        },
+    },
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'debug',
+        },
+        'file_general': {
+            'level': 'INFO',
+            'filters': ['require_debug_false'],
+            'class': 'logging.FileHandler',
+            'formatter': 'info',
+            'filename': 'logs/general.log',
+        },
+        'file_errors': {
+            'level': 'ERROR',
+            'filters': ['require_debug_true'],
+            'class': 'logging.FileHandler',
+            'formatter': 'error',
+            'filename': 'logs/errors.log',
+        },
+        'file_security': {
+            'level': 'WARNING',
+            'filters': ['require_debug_true'],
+            'class': 'logging.FileHandler',
+            'formatter': 'security',
+            'filename': 'logs/security.log',
+        },
+        'mail_admin': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler',
+            'formatter': 'warning',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'file_general'],
+            'propagate': True,
+        },
+        'django.request': {
+            'handlers': ['file_errors', 'mail_admin'],
+            'propagate': True,
+        },
+        'django.server': {
+            'handlers': ['file_errors', 'mail_admin'],
+            'propagate': True,
+        },
+        'django.template': {
+            'handlers': ['file_errors'],
+            'propagate': True,
+        },
+        'django.db.backends': {
+            'handlers': ['file_errors'],
+            'propagate': True,
+        },
+        'django.security': {
+            'handlers': ['file_security'],
+            'propagate': True,
+        }
+    }
+}
